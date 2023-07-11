@@ -1,37 +1,34 @@
-
-import {
-  Autocomplete,
-  Box,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, Box, IconButton, Stack, TextField } from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import "../App.css";
 import { Main } from "./Main";
 
-
 const Search = () => {
   const [result, setResult] = useState([]);
-  const [open, setOpen] = React.useState(false);
-  const [first, setfirst] = useState("");
-  const [word, setword] = useState("");
+  const [open, setOpen] = useState(false);
+  const [first, setFirst] = useState("");
+  const [word, setWord] = useState("");
   const [isValueSelected, setIsValueSelected] = useState(false);
 
-  function handlechange(e) {
-    setword(e.target.value);
+  function handleChange(e) {
+    setWord(e.target.value);
   }
   console.log(word);
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await fetch(`/codes/${word}/matches`);
-        if (response.ok) {
-          const data = await response.json();
-          setResult(data);
+        if (word) {
+          const response = await fetch(`/codes/${word}/matches`);
+          if (response.ok) {
+            const data = await response.json();
+            setResult(data);
+          } else {
+            console.error("Failed to fetch data");
+          }
         } else {
-          console.error("Failed to fetch data");
+          setResult([]);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -42,7 +39,7 @@ const Search = () => {
   console.log("our result is", result);
   console.log(first);
   global.values = first;
-  console.log(global.values.code);
+  console.log(global.values && global.values.code);
   return (
     <>
       <Box
@@ -63,12 +60,22 @@ const Search = () => {
               getOptionLabel={(result) => `${result.id} ${result.description}`}
               options={result}
               sx={{
-                width: "1000px",
+                width: "1450px",
                 backgroundColor: "white",
-                height: "25px",
-                ml: "400px",
+                mt: "14px",
+                ml: "130px",
+
+                display: "inline-block",
+                "& input": {
+                  height: "5px",
+                  bgcolor: "background.paper",
+                  color: (theme) =>
+                    theme.palette.getContrastText(
+                      theme.palette.background.paper
+                    ),
+                },
               }}
-              isoptionequalToValue={(option, value) =>
+              isOptionEqualToValue={(option, value) =>
                 option.description === value.description
               }
               noOptionsText={"PLEASE ENTER VALID CODES"}
@@ -81,9 +88,20 @@ const Search = () => {
                 }
               }}
               onClose={() => setOpen(false)}
-              popupIcon={<SearchIcon />}
+              popupIcon={
+                <IconButton
+                  disableRipple
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => setOpen(!open)}
+                  sx={{
+                    "&:hover": { cursor: "default" },
+                  }}
+                >
+                  <SearchIcon />
+                </IconButton>
+              }
               onChange={(event, newValue) => {
-                setfirst(newValue);
+                setFirst(newValue);
                 setIsValueSelected(true);
               }}
               autoSelect
@@ -92,11 +110,11 @@ const Search = () => {
                   {result.id} {result.description}
                 </Box>
               )}
-              renderInput={(parms) => (
+              renderInput={(params) => (
                 <TextField
-                  {...parms}
-                  onChange={handlechange}
-                  placeholder="search for code"
+                  {...params}
+                  onChange={handleChange}
+                  placeholder="Search for code"
                 />
               )}
             />
@@ -109,5 +127,3 @@ const Search = () => {
 };
 
 export default Search;
-
-

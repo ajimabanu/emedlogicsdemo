@@ -1,26 +1,16 @@
-
-import {
-  Box,
-  Container,
-  Stack,
-  Typography,
-  Tab,
-  Tabs
-} from "@mui/material";
+import { Box, Container, Stack, Typography, Tab, Tabs } from "@mui/material";
 import React, { useState } from "react";
-
 
 import Codedet from "./Codedet";
 import PropTypes from "prop-types";
 import Codenotes from "./Codenotes";
 import Sectionnotes from "./Sectionnotes";
 import Chapternotes from "./Chapternotes";
-import '../App.css';
-import { Translate } from "@mui/icons-material";
+import "../App.css";
+import "../styles/Main.css";
 
 
 function CustomTabPanel(props) {
-
   const { children, value, index, ...other } = props;
   return (
     <div
@@ -30,12 +20,7 @@ function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-
-      {value === index && (
-        <div>
-          {children}
-        </div>
-      )}
+      {value === index && <div>{children}</div>}
     </div>
   );
 }
@@ -48,11 +33,9 @@ CustomTabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`
-  }
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
 }
-
-
 
 export const Main = ({ isValueSelected }) => {
   const [value, setValue] = useState(0);
@@ -64,35 +47,37 @@ export const Main = ({ isValueSelected }) => {
   return (
     <div>
       <Container maxWidth="4px">
-        <Stack direction={"row"} gap={"10px"} mt={3}>
+        <Stack direction={"row"} gap={"10px"} mt={-2.5}>
           <Box
             classname="indexpage"
             sx={{
               height: "590px",
               width: "50%",
               display: "flex",
-              border: "0.5px solid black",
+              border: "0.5px solid grey",
             }}
           >
             <Box
+              className="wrapper"
               sx={{
                 height: "20px",
                 width: "100%",
                 textAlign: "left",
                 mt: "8px",
-                ml: "10px",
-
               }}
             >
               <Typography
+                classname="indexSearch"
                 sx={{
                   //backgroundColor: "#ccc6ed",
-                  width: "100%",
+                  backgroundColor: "#c8e2dd",
+                  color: "#4185d2",
+                  mt: "-8px",
                 }}
                 variant="subtitle1"
                 fontFamily={"sans-serif"}
-                color={"black"}
                 noWrap
+                width="610px"
               >
                 Index Search
               </Typography>
@@ -106,44 +91,44 @@ export const Main = ({ isValueSelected }) => {
               width: "60%",
               display: "flex",
               backgroundColor: "white",
-              border: "0.5px solid black",
+              border: "0.5px solid grey",
             }}
           >
             <Box
+              className="wrapper"
               sx={{
                 height: "20px",
                 width: "50%",
                 mt: "10px",
-                ml: "6px",
-
               }}
             >
               <Typography
-                sx={{
-                  //backgroundColor: "#ccc6ed",
-                  width: "100%",
-
-                }}
+                className="tabularsearch"
                 variant="subtitle1"
                 fontFamily={"sans-serif"}
-                color={"black"}
                 noWrap
-
+                width="930px"
+                sx={{
+                  backgroundColor: "#c8e2dd",
+                  color: "#4185d2",
+                  mt: "-10px",
+                }}
               >
                 Tabular Search
               </Typography>
             </Box>
-            <Stack direction={"column"} ml={10} mt={10}>
+            <Stack direction={"column"} ml={-30} mt={10}>
+              {" "}
               <Typography
+                className="codedetails"
                 variant="subtitle1"
                 fontFamily={"sans-serif"}
                 color={" #4185d2"}
                 fontWeight={600}
-                ml={-24}
+                ml={-28}
                 sx={{
                   borderBottom: "0.3px solid grey",
-                  width: "125%",
-
+                  width: "132%",
                 }}
               >
                 Code details
@@ -151,7 +136,6 @@ export const Main = ({ isValueSelected }) => {
               <Box sx={{ marginRight: "20px" }}>
                 {isValueSelected && <Codedet />}
               </Box>
-
               <Box
                 sx={{
                   height: "300px",
@@ -160,36 +144,43 @@ export const Main = ({ isValueSelected }) => {
                 }}
               >
                 <Box
+                  className="tabs"
                   sx={{
-                    height: "25px",
-                    width: "878px",
-                    backgroundColor: "#c8e2dd",
-                    color: "black",
+                    height: "35px",
+                    width: "920px",
+                    backgroundColor: "#c8e2da",
+                   
                     fontFamily: "sans-serif",
                     fontSize: "13px",
-                    marginLeft: "-200px",
+                marginTop:"10px",
+
                     mt: "20px",
-                    ml: "-195px"
+                    ml: "-219px",
                   }}
                 >
                   <Stack direction={"row"} gap={"70px"} ml={5}>
                     <Box sx={{ width: "100%" }}>
-                      <Box sx={{ marginTop: "-10px" }}>
+                      <Box sx={{ marginTop: "-14px" }}>
                         <Tabs
+                          textColor="primary"
+                          indicatorColor="primary"
+                          className="tabs"
                           value={value}
                           onChange={handleChange}
                           aria-label="basic tabs example"
-                          className="tabs"
-                          sx={{ marginLeft: "-45px" }}
+                          sx={{
+                            marginLeft: "-45px",
+                          }}
                           TabIndicatorProps={{
                             style: {
-                              backgroundColor: "#4185d2",
-                              width: "80px",
-                              marginLeft: "15px",
-                            
-                            }
+                              marginLeft: "8px",
+                              transition: "1s",
+                              height: "70%",
+                              borderRadius: "30px",
+                              backgroundColor: "#90B2D8",
+                              opacity: 0.3,
+                            },
                           }}
-
                         >
                           <Tab
                             disableFocusRipple
@@ -201,10 +192,10 @@ export const Main = ({ isValueSelected }) => {
                               fontWeight: "700px",
                               color: "#4185d2",
                               textTransform: "none",
+                              width: "150px",
                             }}
-                            label="  Code notes"
+                            label=" Code notes"
                             {...a11yProps(0)}
-
                           />
                           <Tab
                             disableFocusRipple
@@ -216,14 +207,15 @@ export const Main = ({ isValueSelected }) => {
                               fontWeight: "700px",
                               color: "#4185d2",
                               textTransform: "none",
+                              width: "150px",
                             }}
                             variant="subtitle1"
                             fontWeight={"700"}
                             label="Section notes"
                             {...a11yProps(1)}
-
                           />
                           <Tab
+                            className="tabs"
                             disableFocusRipple
                             disableRipple
                             disableTouchRipple
@@ -233,6 +225,7 @@ export const Main = ({ isValueSelected }) => {
                               fontWeight: "700px",
                               color: "#4185d2",
                               textTransform: "none",
+                              width: "150px",
                             }}
                             variant="subtitle1"
                             fontWeight={"700"}
@@ -249,28 +242,39 @@ export const Main = ({ isValueSelected }) => {
                               fontWeight: "700px",
                               color: "#4185d2",
                               textTransform: "none",
+                              width: "150px",
                             }}
                             variant="subtitle1"
                             fontWeight={"700"}
                             label="Chapter guidlines"
                             {...a11yProps(3)}
-
                           />
                         </Tabs>
-                      </Box >
-                      <CustomTabPanel
-                        value={value}
-                        index={0}>
-                        <Codenotes />
-                      </CustomTabPanel>
-                      <CustomTabPanel value={value} index={1}>
-                        <Sectionnotes />
-                      </CustomTabPanel>
-                      <CustomTabPanel value={value} index={2}>
-                        <Chapternotes />
-                      </CustomTabPanel>
-
-                      <CustomTabPanel value={value} index={3}></CustomTabPanel>
+                      </Box>
+                      <div
+                        className="tabpanels"
+                        style={{
+                          height: "180px",
+                          width: "850px",
+                          overflowY: "scroll",
+                          paddingLeft: "30px",
+                        }}
+                      >
+                        {" "}
+                        <CustomTabPanel value={value} index={0}>
+                          <Codenotes />
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={1}>
+                          <Sectionnotes />
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={2}>
+                          <Chapternotes />
+                        </CustomTabPanel>
+                        <CustomTabPanel
+                          value={value}
+                          index={3}
+                        ></CustomTabPanel>
+                      </div>
                     </Box>
                   </Stack>
                 </Box>
@@ -282,5 +286,3 @@ export const Main = ({ isValueSelected }) => {
     </div>
   );
 };
-
-
