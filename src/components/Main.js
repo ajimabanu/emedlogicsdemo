@@ -118,7 +118,7 @@ export const Main = ({ isValueSelected }) => {
               </Typography>
             </Box>
             <Stack direction={"column"} ml={-30} mt={10}>
-              {" "}
+           
               <Typography
                 className="codedetails"
                 variant="subtitle1"
